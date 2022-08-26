@@ -43,7 +43,7 @@ class _MobileScreenState extends State<MobileScreen> {
                   Tab(text: 'CALLS'),
                 ]),
           ),
-          body: TabBarView(
+          body: const TabBarView(
             children: [
               ContactList(),
               Text('STATUS'),

@@ -1,0 +1,9 @@
+# This is a generated file; do not edit or check into version control.
+cloud_firestore=/Users/fahadaljohani/Developer/flutter/.pub-cache/hosted/pub.dartlang.org/cloud_firestore-3.4.5/
+cloud_firestore_web=/Users/fahadaljohani/Developer/flutter/.pub-cache/hosted/pub.dartlang.org/cloud_firestore_web-2.8.5/
+firebase_auth=/Users/fahadaljohani/Developer/flutter/.pub-cache/hosted/pub.dartlang.org/firebase_auth-3.6.4/
+firebase_auth_web=/Users/fahadaljohani/Developer/flutter/.pub-cache/hosted/pub.dartlang.org/firebase_auth_web-4.2.4/
+firebase_core=/Users/fahadaljohani/Developer/flutter/.pub-cache/hosted/pub.dartlang.org/firebase_core-1.21.0/
+firebase_core_web=/Users/fahadaljohani/Developer/flutter/.pub-cache/hosted/pub.dartlang.org/firebase_core_web-1.7.1/
+firebase_storage=/Users/fahadaljohani/Developer/flutter/.pub-cache/hosted/pub.dartlang.org/firebase_storage-10.3.6/
+firebase_storage_web=/Users/fahadaljohani/Developer/flutter/.pub-cache/hosted/pub.dartlang.org/firebase_storage_web-3.3.4/
