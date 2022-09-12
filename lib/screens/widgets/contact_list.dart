@@ -20,7 +20,10 @@ class ContactList extends StatelessWidget {
                   InkWell(
                     onTap: () {
                       Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => const ChatListScreen(),
+                        builder: (context) => ChatListScreen(
+                          name: 'unKnown',
+                          uid: '',
+                        ),
                       ));
                     },
                     child: ListTile(
