@@ -4,8 +4,8 @@ import 'package:whatsapp/features/auth/screens/login_screen.dart';
 import 'package:whatsapp/features/auth/screens/otp_screen.dart';
 import 'package:whatsapp/features/auth/screens/user_information_screen.dart';
 import 'package:whatsapp/features/select_contact/screen/select_contact_screen.dart';
-import 'package:whatsapp/screens/chat_list_screen.dart';
-import 'package:whatsapp/screens/mobile_screen_layout.dart';
+import 'package:whatsapp/features/chat/screen/chat_list_screen.dart';
+import 'package:whatsapp/features/chat/screen/mobile_screen_layout.dart';
 
 Route<dynamic> generateRoute(RouteSettings setting) {
   switch (setting.name) {

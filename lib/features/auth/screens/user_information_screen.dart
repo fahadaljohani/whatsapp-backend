@@ -2,7 +2,6 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:whatsapp/common/utils/utils.dart';
 import 'package:whatsapp/features/auth/controller/auth_controller.dart';
 
@@ -24,7 +23,7 @@ class _UserInformationScreenState extends ConsumerState<UserInformationScreen> {
   File? profileImage;
 
   void selectImageFromGallery() async {
-    final pickImage = await pickImageFromGallery(ImageSource.gallery);
+    final pickImage = await pickImageFromGallery();
     if (pickImage != null) {
       setState(() {
         profileImage = pickImage;

@@ -68,5 +68,8 @@
 
 	<key>NSContactsUsageDescription</key>
      <string>contact list need to chat with freinds</string>
+
+	<key>NSAppleMusicUsageDescription</key>
+    <string>need to access audio recorder</string>
 </dict>
 </plist>

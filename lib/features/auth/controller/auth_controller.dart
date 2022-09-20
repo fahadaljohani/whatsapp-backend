@@ -44,7 +44,7 @@ class AuthController {
     return user;
   }
 
-  Stream<UserModel> getUserById(String userId) {
+  Stream<UserModel?> getUserById(String userId) {
     return authRepository.userData(userId);
   }
 

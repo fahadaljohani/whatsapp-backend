@@ -1,4 +1,3 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -11,7 +10,7 @@ import 'package:whatsapp/features/auth/screens/otp_screen.dart';
 import 'package:whatsapp/features/auth/screens/user_information_screen.dart';
 import 'package:whatsapp/models/user_model.dart';
 
-import 'package:whatsapp/screens/mobile_screen_layout.dart';
+import 'package:whatsapp/features/chat/screen/mobile_screen_layout.dart';
 
 final authRepositoryProvider = Provider(
   (ref) => AuthRepository(
@@ -70,7 +69,6 @@ class AuthRepository {
       PhoneAuthCredential credential = PhoneAuthProvider.credential(
           verificationId: verificationId, smsCode: userOTP);
       await auth.signInWithCredential(credential);
-      // ignore: use_build_context_synchronously
       Navigator.pushNamedAndRemoveUntil(
         context,
         UserInformationScreen.routeName,
@@ -82,10 +80,11 @@ class AuthRepository {
     }
   }
 
-  void saveUserData(
-      {required BuildContext context,
-      required String name,
-      required File? profilePic}) async {
+  void saveUserData({
+    required BuildContext context,
+    required String name,
+    required File? profilePic,
+  }) async {
     final uid = auth.currentUser!.uid;
     String photoUrl =
         "https://i.pinimg.com/564x/6f/61/49/6f6149e35160ea4aad3826f6016f7533.jpg";
@@ -107,7 +106,7 @@ class AuthRepository {
         context, MobileScreen.routeName, (route) => false);
   }
 
-  Stream<UserModel> userData(String userId) {
+  Stream<UserModel?> userData(String userId) {
     return firestore.collection('users').doc(userId).snapshots().map((event) {
       return UserModel.fromMap(event.data()!);
     });
