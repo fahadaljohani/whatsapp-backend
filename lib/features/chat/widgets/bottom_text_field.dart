@@ -10,6 +10,8 @@ import 'package:whatsapp/colors.dart';
 import 'package:whatsapp/common/utils/utils.dart';
 import 'package:whatsapp/enums/message_enums.dart';
 import 'package:whatsapp/features/chat/controller/chat_controller.dart';
+import 'package:whatsapp/features/chat/widgets/reply_message_preview.dart';
+import 'package:whatsapp/provider/message_reply_provider.dart';
 
 class BottomTextField extends ConsumerStatefulWidget {
   final String recieverId;
@@ -129,8 +131,16 @@ class _BottomTextFieldState extends ConsumerState<BottomTextField> {
 
   @override
   Widget build(BuildContext context) {
+    var replyedMessage = ref.watch(messageRepyProvider);
     return Column(
       children: [
+        replyedMessage != null
+            ? MessageReplyPreview(
+                replyedMessage: replyedMessage.replyMessage,
+                isMe: replyedMessage.isMe,
+                messageEnum: replyedMessage.replyType,
+              )
+            : const SizedBox(),
         Row(
           children: [
             Expanded(

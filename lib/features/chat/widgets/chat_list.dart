@@ -4,10 +4,11 @@ import 'package:flutter/scheduler.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 import 'package:whatsapp/common/widgets/loader.dart';
-import 'package:whatsapp/features/chat/repository/chat_repository.dart';
+import 'package:whatsapp/features/chat/controller/chat_controller.dart';
 import 'package:whatsapp/models/message.dart';
-import 'package:whatsapp/screens/widgets/my_messages.dart';
-import 'package:whatsapp/screens/widgets/sender_message.dart';
+import 'package:whatsapp/features/chat/widgets/my_messages.dart';
+import 'package:whatsapp/features/chat/widgets/sender_message.dart';
+import 'package:whatsapp/provider/message_reply_provider.dart';
 
 class ChatList extends ConsumerStatefulWidget {
   final String recieverId;
@@ -35,7 +36,7 @@ class _ChatListState extends ConsumerState<ChatList> {
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<List<Message>>(
-        stream: ref.read(chatRepositoryProvider).getMessages(widget.recieverId),
+        stream: ref.read(chatControllerProvider).getMessages(widget.recieverId),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Loader();
@@ -59,12 +60,34 @@ class _ChatListState extends ConsumerState<ChatList> {
                   text: message.text,
                   time: DateFormat.Hm().format(message.timeSent),
                   type: message.type,
+                  replyMessage: message.replyMessage,
+                  replyMessageType: message.messageReplyType,
+                  replyTo: message.replyTo,
+                  onLeftSwip: () {
+                    ref.read(messageRepyProvider.state).update((state) {
+                      return MessageReply(
+                          replyMessage: state!.replyMessage,
+                          isMe: true,
+                          replyType: state.replyType);
+                    });
+                  },
                 );
               }
               return SenderMessage(
                 text: message.text,
                 time: DateFormat.Hm().format(message.timeSent),
                 type: message.type,
+                replyMessage: message.replyMessage,
+                replyMessageType: message.messageReplyType,
+                replyTo: message.replyTo,
+                onRightSwipe: () {
+                  ref.read(messageRepyProvider.state).update((state) {
+                    return MessageReply(
+                        replyMessage: message.text,
+                        isMe: false,
+                        replyType: message.type);
+                  });
+                },
               );
             }),
           );
