@@ -73,4 +73,12 @@ class ChatRepositoryController {
   Stream<List<Message>> getMessages(String userId) {
     return chatRepository.getMessages(userId);
   }
+
+  void setMessageSeen(
+    BuildContext context,
+    String receiverId,
+    String messageId,
+  ) {
+    chatRepository.setMessageSeen(context, receiverId, messageId);
+  }
 }

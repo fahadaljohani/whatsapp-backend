@@ -54,21 +54,28 @@ class _ChatListState extends ConsumerState<ChatList> {
             itemCount: snapshot.data!.length,
             itemBuilder: ((context, index) {
               final message = snapshot.data![index];
+              if (message.isSeen != true &&
+                  message.recieverId ==
+                      FirebaseAuth.instance.currentUser!.uid) {
+                ref.read(chatControllerProvider).setMessageSeen(
+                    context, widget.recieverId, message.messageId);
+              }
 
               if (message.senderId == FirebaseAuth.instance.currentUser!.uid) {
                 return MyMessage(
                   text: message.text,
                   time: DateFormat.Hm().format(message.timeSent),
                   type: message.type,
+                  isSeen: message.isSeen,
                   replyMessage: message.replyMessage,
                   replyMessageType: message.messageReplyType,
                   replyTo: message.replyTo,
                   onLeftSwip: () {
                     ref.read(messageRepyProvider.state).update((state) {
                       return MessageReply(
-                          replyMessage: state!.replyMessage,
+                          replyMessage: message.text,
                           isMe: true,
-                          replyType: state.replyType);
+                          replyType: message.type);
                     });
                   },
                 );
@@ -77,6 +84,7 @@ class _ChatListState extends ConsumerState<ChatList> {
                 text: message.text,
                 time: DateFormat.Hm().format(message.timeSent),
                 type: message.type,
+                isSeen: message.isSeen,
                 replyMessage: message.replyMessage,
                 replyMessageType: message.messageReplyType,
                 replyTo: message.replyTo,

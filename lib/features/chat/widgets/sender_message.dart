@@ -10,6 +10,7 @@ class SenderMessage extends ConsumerWidget {
   final String text;
   final String time;
   final MessageEnum type;
+  final bool isSeen;
   final String? replyMessage;
   final String? replyTo;
   final MessageEnum? replyMessageType;
@@ -19,6 +20,7 @@ class SenderMessage extends ConsumerWidget {
     required this.text,
     required this.time,
     required this.type,
+    required this.isSeen,
     this.replyMessage,
     this.replyTo,
     this.replyMessageType,
@@ -91,12 +93,17 @@ class SenderMessage extends ConsumerWidget {
                             color: Colors.white60,
                           ),
                         ),
-                        const SizedBox(width: 5),
-                        const Icon(
-                          Icons.done_all,
-                          size: 20,
-                          color: Colors.white60,
-                        ),
+                        // const SizedBox(width: 5),
+                        // isSeen
+                        //     ? const Icon(
+                        //         Icons.done_all,
+                        //         color: Colors.blue,
+                        //       )
+                        //     : const Icon(
+                        //         Icons.done,
+                        //         size: 20,
+                        //         color: Colors.white60,
+                        //       ),
                       ],
                     )),
               ],

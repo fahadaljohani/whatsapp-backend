@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:whatsapp/colors.dart';
 
 import 'package:whatsapp/enums/message_enums.dart';
+import 'package:whatsapp/features/chat/widgets/display_text_image_git.dart';
 import 'package:whatsapp/provider/message_reply_provider.dart';
 
 class MessageReplyPreview extends ConsumerWidget {
@@ -49,7 +50,10 @@ class MessageReplyPreview extends ConsumerWidget {
           const SizedBox(
             height: 5,
           ),
-          Text(replyedMessage),
+          DisplayTextImageGif(
+            message: replyedMessage,
+            type: messageEnum,
+          ),
         ],
       ),
     );
