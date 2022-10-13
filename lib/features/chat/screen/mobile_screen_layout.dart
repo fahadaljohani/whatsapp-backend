@@ -8,6 +8,8 @@ import 'package:whatsapp/common/utils/utils.dart';
 import 'package:whatsapp/features/auth/controller/auth_controller.dart';
 import 'package:whatsapp/features/chat/widgets/contact_list.dart';
 import 'package:whatsapp/features/select_contact/screen/select_contact_screen.dart';
+import 'package:whatsapp/features/status/screen/confirm_status_screen.dart';
+import 'package:whatsapp/features/status/screen/status_contact_screen.dart';
 
 class MobileScreen extends ConsumerStatefulWidget {
   static const String routeName = '/mobile-screen';
@@ -80,7 +82,8 @@ class _MobileScreenState extends ConsumerState<MobileScreen>
             controller: tabBarController,
             indicatorColor: tabColor,
             unselectedLabelColor: greyColor,
-            labelStyle: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
+            labelStyle:
+                const TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
             labelColor: tabColor,
             indicatorWeight: 4,
             tabs: const [
@@ -93,7 +96,7 @@ class _MobileScreenState extends ConsumerState<MobileScreen>
         controller: tabBarController,
         children: const [
           ContactList(),
-          Text('STATUS'),
+          StatusContactScreen(),
           Text('CALLS'),
         ],
       ),
@@ -103,7 +106,10 @@ class _MobileScreenState extends ConsumerState<MobileScreen>
             navigatoToSelectContacts();
           } else {
             image = await pickImageFromGallery();
-            if (image != null) {}
+            if (image != null) {
+              Navigator.pushNamed(context, ConfirmStatusScreen.routeName,
+                  arguments: image);
+            }
           }
         },
         backgroundColor: tabColor,

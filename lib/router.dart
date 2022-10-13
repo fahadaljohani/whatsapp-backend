@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:whatsapp/common/widgets/error.dart';
 import 'package:whatsapp/features/auth/screens/login_screen.dart';
@@ -6,6 +7,9 @@ import 'package:whatsapp/features/auth/screens/user_information_screen.dart';
 import 'package:whatsapp/features/select_contact/screen/select_contact_screen.dart';
 import 'package:whatsapp/features/chat/screen/chat_list_screen.dart';
 import 'package:whatsapp/features/chat/screen/mobile_screen_layout.dart';
+import 'package:whatsapp/features/status/screen/confirm_status_screen.dart';
+import 'package:whatsapp/features/status/screen/status_view_screen.dart';
+import 'package:whatsapp/models/status.dart';
 
 Route<dynamic> generateRoute(RouteSettings setting) {
   switch (setting.name) {
@@ -41,6 +45,15 @@ Route<dynamic> generateRoute(RouteSettings setting) {
                 name: name,
                 uid: uid,
               ));
+    case ConfirmStatusScreen.routeName:
+      final file = setting.arguments as File;
+      return MaterialPageRoute(
+        builder: (context) => ConfirmStatusScreen(file: file),
+      );
+    case StatusViewScreen.routeName:
+      final status = setting.arguments as Status;
+      return MaterialPageRoute(
+          builder: (context) => StatusViewScreen(status: status));
     default:
       return MaterialPageRoute(
         builder: (context) => const Scaffold(
