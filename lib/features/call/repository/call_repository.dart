@@ -50,7 +50,7 @@ class CallRepository {
     }
   }
 
-  void deleteCall(String senderId, String receiverId) async {
+  void endCall(String senderId, String receiverId) async {
     try {
       await firestore.collection('call').doc(senderId).delete();
       await firestore.collection('call').doc(receiverId).delete();

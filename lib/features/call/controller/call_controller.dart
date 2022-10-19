@@ -7,6 +7,7 @@ import 'package:whatsapp/features/auth/controller/auth_controller.dart';
 
 import 'package:whatsapp/features/call/repository/call_repository.dart';
 import 'package:whatsapp/models/call.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 
 final callControllerProvider = Provider((ref) {
   final callRepository = ref.read(callRepositoryProvider);
@@ -51,11 +52,14 @@ class CallController {
       );
       callRepository.makeCall(
           context: context, sender: senderCall, receiver: receiverCall);
+      // save data to mobile app .
+      Box boxCall = Hive.box<Call>('call');
+      boxCall.add(senderCall);
     });
   }
 
-  void deleteCall(String senderId, String receiverId) {
-    callRepository.deleteCall(senderId, receiverId);
+  void endCall(String senderId, String receiverId) {
+    callRepository.endCall(senderId, receiverId);
   }
 
   Stream<DocumentSnapshot> get getCall => callRepository.getCall;

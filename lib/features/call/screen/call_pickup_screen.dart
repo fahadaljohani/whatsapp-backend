@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:whatsapp/colors.dart';
 import 'package:whatsapp/features/call/controller/call_controller.dart';
 import 'package:whatsapp/features/call/screen/call_screen.dart';
@@ -10,9 +11,9 @@ class CallPickupScreen extends ConsumerWidget {
   final Widget scaffold;
   const CallPickupScreen({super.key, required this.scaffold});
 
-  void endCall(String senderId, String receiverId, WidgetRef ref) {
-    ref.read(callControllerProvider).deleteCall(senderId, receiverId);
-  }
+  // void endCall(String senderId, String receiverId, WidgetRef ref) {
+  //   ref.read(callControllerProvider).endCall(senderId, receiverId);
+  // }
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

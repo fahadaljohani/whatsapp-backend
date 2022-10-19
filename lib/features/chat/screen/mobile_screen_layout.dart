@@ -6,6 +6,7 @@ import 'package:whatsapp/colors.dart';
 import 'package:whatsapp/common/utils/utils.dart';
 import 'package:whatsapp/features/auth/controller/auth_controller.dart';
 import 'package:whatsapp/features/call/screen/call_pickup_screen.dart';
+import 'package:whatsapp/features/call/screen/calls_missed_screen.dart';
 import 'package:whatsapp/features/chat/widgets/contact_list.dart';
 import 'package:whatsapp/features/group/screen/create_group_screen.dart';
 import 'package:whatsapp/features/select_contact/screen/select_contact_screen.dart';
@@ -114,10 +115,10 @@ class _MobileScreenState extends ConsumerState<MobileScreen>
         ),
         body: TabBarView(
           controller: tabBarController,
-          children: const [
-            ContactList(),
-            StatusContactScreen(),
-            Text('CALLS'),
+          children: [
+            const ContactList(),
+            const StatusContactScreen(),
+            CallsMissedScreen(),
           ],
         ),
         floatingActionButton: FloatingActionButton(

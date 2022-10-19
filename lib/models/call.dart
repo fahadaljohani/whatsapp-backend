@@ -1,12 +1,26 @@
-class Call {
+import 'package:hive/hive.dart';
+
+part 'call.g.dart';
+
+@HiveType(typeId: 0)
+class Call extends HiveObject {
+  @HiveField(0)
   final String callId;
+  @HiveField(1)
   final String callerId;
+  @HiveField(2)
   final String callerName;
+  @HiveField(3)
   final String callerPic;
+  @HiveField(4)
   final String receiverId;
+  @HiveField(5)
   final String receiverName;
+  @HiveField(6)
   final String receiverPic;
+  @HiveField(7)
   final bool hasDial;
+
   Call({
     required this.callId,
     required this.callerId,

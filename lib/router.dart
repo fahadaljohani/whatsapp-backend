@@ -4,6 +4,7 @@ import 'package:whatsapp/common/widgets/error.dart';
 import 'package:whatsapp/features/auth/screens/login_screen.dart';
 import 'package:whatsapp/features/auth/screens/otp_screen.dart';
 import 'package:whatsapp/features/auth/screens/user_information_screen.dart';
+import 'package:whatsapp/features/call/screen/calls_missed_screen.dart';
 import 'package:whatsapp/features/group/screen/create_group_screen.dart';
 import 'package:whatsapp/features/select_contact/screen/select_contact_screen.dart';
 import 'package:whatsapp/features/chat/screen/chat_list_screen.dart';
@@ -61,6 +62,9 @@ Route<dynamic> generateRoute(RouteSettings setting) {
           builder: (context) => StatusViewScreen(status: status));
     case CraeteGroupScreen.routeName:
       return MaterialPageRoute(builder: (context) => const CraeteGroupScreen());
+    case CallsMissedScreen.routeName:
+      // final uid = setting.arguments as String;
+      return MaterialPageRoute(builder: (context) => CallsMissedScreen());
     default:
       return MaterialPageRoute(
         builder: (context) => const Scaffold(

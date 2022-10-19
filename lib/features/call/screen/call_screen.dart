@@ -21,7 +21,7 @@ class CallScreen extends ConsumerStatefulWidget {
 
 class _CallScreenState extends ConsumerState<CallScreen> {
   AgoraClient? client;
-  String baseUrl = '/https://whatsappclone-app.herokuapp.com';
+  String baseUrl = 'https://whatsappclone-app.herokuapp.com';
   @override
   void initState() {
     super.initState();
@@ -49,11 +49,18 @@ class _CallScreenState extends ConsumerState<CallScreen> {
                   AgoraVideoViewer(client: client!),
                   AgoraVideoButtons(
                     client: client!,
-                    onDisconnect: () {
-                      ref.read(callControllerProvider).deleteCall(
-                          widget.call.callerId, widget.call.receiverId);
-                      client!.engine.leaveChannel();
-                    },
+                    disconnectButtonChild: IconButton(
+                      onPressed: () async {
+                        await client!.engine.leaveChannel();
+                        ref.read(callControllerProvider).endCall(
+                            widget.call.callerId, widget.call.receiverId);
+                        Navigator.pop(context);
+                      },
+                      icon: const Icon(
+                        Icons.call_end,
+                        color: Colors.redAccent,
+                      ),
+                    ),
                   ),
                 ],
               ),
