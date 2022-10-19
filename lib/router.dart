@@ -4,6 +4,7 @@ import 'package:whatsapp/common/widgets/error.dart';
 import 'package:whatsapp/features/auth/screens/login_screen.dart';
 import 'package:whatsapp/features/auth/screens/otp_screen.dart';
 import 'package:whatsapp/features/auth/screens/user_information_screen.dart';
+import 'package:whatsapp/features/group/screen/create_group_screen.dart';
 import 'package:whatsapp/features/select_contact/screen/select_contact_screen.dart';
 import 'package:whatsapp/features/chat/screen/chat_list_screen.dart';
 import 'package:whatsapp/features/chat/screen/mobile_screen_layout.dart';
@@ -39,11 +40,15 @@ Route<dynamic> generateRoute(RouteSettings setting) {
     case ChatListScreen.routeName:
       final args = setting.arguments as Map<String, dynamic>;
       final name = args['name'];
-      final uid = args['uid'];
+      final receiverId = args['receiverId'];
+      final receiverPic = args['receiverPic'];
+      final isGroupChat = args['isGroupChat'];
       return MaterialPageRoute(
           builder: (context) => ChatListScreen(
                 name: name,
-                uid: uid,
+                receiverId: receiverId,
+                receiverPic: receiverPic,
+                isGroupChat: isGroupChat,
               ));
     case ConfirmStatusScreen.routeName:
       final file = setting.arguments as File;
@@ -54,6 +59,8 @@ Route<dynamic> generateRoute(RouteSettings setting) {
       final status = setting.arguments as Status;
       return MaterialPageRoute(
           builder: (context) => StatusViewScreen(status: status));
+    case CraeteGroupScreen.routeName:
+      return MaterialPageRoute(builder: (context) => const CraeteGroupScreen());
     default:
       return MaterialPageRoute(
         builder: (context) => const Scaffold(

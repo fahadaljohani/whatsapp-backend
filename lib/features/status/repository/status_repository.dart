@@ -104,7 +104,7 @@ class StatusRepository {
               isEqualTo: contacts[i].phones[0].number.replaceAll(' ', ''),
             )
             .where('createdAt',
-                isGreaterThan: DateTime.now()
+                isLessThanOrEqualTo: DateTime.now()
                     .subtract(const Duration(hours: 24))
                     .millisecondsSinceEpoch)
             .get();

@@ -1,12 +1,13 @@
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_contacts/flutter_contacts.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:whatsapp/colors.dart';
 import 'package:whatsapp/common/utils/utils.dart';
 import 'package:whatsapp/features/auth/controller/auth_controller.dart';
+import 'package:whatsapp/features/call/screen/call_pickup_screen.dart';
 import 'package:whatsapp/features/chat/widgets/contact_list.dart';
+import 'package:whatsapp/features/group/screen/create_group_screen.dart';
 import 'package:whatsapp/features/select_contact/screen/select_contact_screen.dart';
 import 'package:whatsapp/features/status/screen/confirm_status_screen.dart';
 import 'package:whatsapp/features/status/screen/status_contact_screen.dart';
@@ -63,57 +64,77 @@ class _MobileScreenState extends ConsumerState<MobileScreen>
   // - buildContext
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: appBarColor,
-        title: const Text('whatsapp'),
-        centerTitle: false,
-        actions: [
-          IconButton(
-            onPressed: () {},
-            icon: const Icon(Icons.search),
+    return CallPickupScreen(
+      scaffold: Scaffold(
+        appBar: AppBar(
+          backgroundColor: appBarColor,
+          title: const Text(
+            'whatsapp',
+            style: TextStyle(color: greyColor),
           ),
-          IconButton(
-            onPressed: () {},
-            icon: const Icon(Icons.more_vert),
-          )
-        ],
-        bottom: TabBar(
-            controller: tabBarController,
-            indicatorColor: tabColor,
-            unselectedLabelColor: greyColor,
-            labelStyle:
-                const TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
-            labelColor: tabColor,
-            indicatorWeight: 4,
-            tabs: const [
-              Tab(text: 'CHATS'),
-              Tab(text: 'STATUS'),
-              Tab(text: 'CALLS'),
-            ]),
-      ),
-      body: TabBarView(
-        controller: tabBarController,
-        children: const [
-          ContactList(),
-          StatusContactScreen(),
-          Text('CALLS'),
-        ],
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () async {
-          if (tabBarController.index == 0) {
-            navigatoToSelectContacts();
-          } else {
-            image = await pickImageFromGallery();
-            if (image != null) {
-              Navigator.pushNamed(context, ConfirmStatusScreen.routeName,
-                  arguments: image);
+          centerTitle: false,
+          actions: [
+            IconButton(
+              onPressed: () {},
+              icon: const Icon(
+                Icons.search,
+                color: greyColor,
+              ),
+            ),
+            PopupMenuButton(
+                icon: const Icon(
+                  Icons.more_vert,
+                  color: greyColor,
+                ),
+                itemBuilder: (context) {
+                  return [
+                    PopupMenuItem(
+                      onTap: () => Future(
+                        () => Navigator.pushNamed(
+                            context, CraeteGroupScreen.routeName),
+                      ),
+                      child: const Text('create group'),
+                    )
+                  ];
+                }),
+          ],
+          bottom: TabBar(
+              controller: tabBarController,
+              indicatorColor: tabColor,
+              unselectedLabelColor: greyColor,
+              labelStyle:
+                  const TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
+              labelColor: tabColor,
+              indicatorWeight: 4,
+              tabs: const [
+                Tab(text: 'CHATS'),
+                Tab(text: 'STATUS'),
+                Tab(text: 'CALLS'),
+              ]),
+        ),
+        body: TabBarView(
+          controller: tabBarController,
+          children: const [
+            ContactList(),
+            StatusContactScreen(),
+            Text('CALLS'),
+          ],
+        ),
+        floatingActionButton: FloatingActionButton(
+          onPressed: () async {
+            if (tabBarController.index == 0) {
+              navigatoToSelectContacts();
+            } else {
+              image = await pickImageFromGallery();
+              if (image != null) {
+                Navigator.pushNamed(context, ConfirmStatusScreen.routeName,
+                    arguments: image);
+              }
             }
-          }
-        },
-        backgroundColor: tabColor,
-        child: const Icon(Icons.comment, color: whiteColor),
+          },
+          backgroundColor: tabColor,
+          child: const Icon(Icons.comment, color: whiteColor),
+        ),
       ),
     );
   }

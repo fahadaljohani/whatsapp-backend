@@ -15,9 +15,11 @@ import 'package:whatsapp/provider/message_reply_provider.dart';
 
 class BottomTextField extends ConsumerStatefulWidget {
   final String recieverId;
+  final bool isGroupChat;
   const BottomTextField({
     Key? key,
     required this.recieverId,
+    required this.isGroupChat,
   }) : super(key: key);
 
   @override
@@ -54,6 +56,7 @@ class _BottomTextFieldState extends ConsumerState<BottomTextField> {
           recieverId: recieverId,
           text: text,
           messageEnum: messageEnum,
+          isGroupChat: widget.isGroupChat,
         );
   }
 
@@ -62,20 +65,24 @@ class _BottomTextFieldState extends ConsumerState<BottomTextField> {
     required MessageEnum messageEnum,
   }) {
     ref.read(chatControllerProvider).sendFileMessage(
-        context: context,
-        recieverId: widget.recieverId,
-        file: file,
-        messageEnum: messageEnum);
+          context: context,
+          recieverId: widget.recieverId,
+          file: file,
+          messageEnum: messageEnum,
+          isGroupChat: widget.isGroupChat,
+        );
   }
 
   void sendImageFile() {
     pickImageFromGallery().then((value) {
       if (value != null) {
         ref.read(chatControllerProvider).sendFileMessage(
-            context: context,
-            recieverId: widget.recieverId,
-            file: value,
-            messageEnum: MessageEnum.image);
+              context: context,
+              recieverId: widget.recieverId,
+              file: value,
+              messageEnum: MessageEnum.image,
+              isGroupChat: widget.isGroupChat,
+            );
       }
     });
   }
@@ -84,10 +91,12 @@ class _BottomTextFieldState extends ConsumerState<BottomTextField> {
     pickVideoFromGallery().then((value) {
       if (value != null) {
         ref.read(chatControllerProvider).sendFileMessage(
-            context: context,
-            recieverId: widget.recieverId,
-            file: value,
-            messageEnum: MessageEnum.video);
+              context: context,
+              recieverId: widget.recieverId,
+              file: value,
+              messageEnum: MessageEnum.video,
+              isGroupChat: widget.isGroupChat,
+            );
       }
     });
   }

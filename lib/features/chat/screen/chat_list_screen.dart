@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:whatsapp/colors.dart';
 import 'package:whatsapp/common/widgets/loader.dart';
 import 'package:whatsapp/features/auth/controller/auth_controller.dart';
+import 'package:whatsapp/features/call/controller/call_controller.dart';
 import 'package:whatsapp/features/chat/widgets/bottom_text_field.dart';
 import 'package:whatsapp/features/chat/widgets/chat_list.dart';
 import 'package:whatsapp/models/user_model.dart';
@@ -10,11 +11,26 @@ import 'package:whatsapp/models/user_model.dart';
 class ChatListScreen extends ConsumerWidget {
   static const String routeName = '/chat-list-screen';
   final String name;
-  final String uid;
-  ScrollController messageController = ScrollController();
+  final String receiverId;
+  final String receiverPic;
+  final bool isGroupChat;
+  final ScrollController messageController = ScrollController();
 
-  ChatListScreen({Key? key, required this.name, required this.uid})
-      : super(key: key);
+  ChatListScreen({
+    Key? key,
+    required this.name,
+    required this.receiverId,
+    required this.receiverPic,
+    required this.isGroupChat,
+  }) : super(key: key);
+
+  void makeCall(BuildContext context, WidgetRef ref) {
+    ref.read(callControllerProvider).makeCall(
+        context: context,
+        receiverId: receiverId,
+        receiverName: name,
+        receiverPic: receiverPic);
+  }
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -22,30 +38,38 @@ class ChatListScreen extends ConsumerWidget {
       appBar: AppBar(
         backgroundColor: appBarColor,
         title: StreamBuilder<UserModel?>(
-            stream: ref.watch(authControllerProvider).getUserById(uid),
+            stream: ref.watch(authControllerProvider).getUserById(receiverId),
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.waiting) {
                 return const Loader();
               }
 
-              return Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(name),
-                  Text(
-                    snapshot.data!.isOnline == true ? 'Online' : 'Offline',
-                    style: const TextStyle(
-                      fontSize: 13,
-                      fontWeight: FontWeight.normal,
-                    ),
-                  ),
-                ],
-              );
+              return isGroupChat
+                  ? Text(name)
+                  : Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(name),
+                        Text(
+                          snapshot.data!.isOnline == true
+                              ? 'Online'
+                              : 'Offline',
+                          style: const TextStyle(
+                            fontSize: 13,
+                            fontWeight: FontWeight.normal,
+                          ),
+                        ),
+                      ],
+                    );
             }),
         centerTitle: false,
         actions: [
-          IconButton(onPressed: () {}, icon: const Icon(Icons.video_call)),
-          IconButton(onPressed: () {}, icon: const Icon(Icons.call)),
+          IconButton(
+              onPressed: () => makeCall(context, ref),
+              icon: const Icon(Icons.video_call)),
+          IconButton(
+              onPressed: () => makeCall(context, ref),
+              icon: const Icon(Icons.call)),
           IconButton(onPressed: () {}, icon: const Icon(Icons.more_vert)),
         ],
       ),
@@ -53,11 +77,13 @@ class ChatListScreen extends ConsumerWidget {
         children: [
           Expanded(
             child: ChatList(
-              recieverId: uid,
+              recieverId: receiverId,
+              isGroupChat: isGroupChat,
             ),
           ),
           BottomTextField(
-            recieverId: uid,
+            recieverId: receiverId,
+            isGroupChat: isGroupChat,
           ),
         ],
       ),

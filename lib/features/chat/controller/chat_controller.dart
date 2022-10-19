@@ -6,6 +6,7 @@ import 'package:whatsapp/enums/message_enums.dart';
 import 'package:whatsapp/features/auth/controller/auth_controller.dart';
 import 'package:whatsapp/features/chat/repository/chat_repository.dart';
 import 'package:whatsapp/models/contact.dart';
+import 'package:whatsapp/models/group.dart';
 import 'package:whatsapp/models/message.dart';
 import 'package:whatsapp/provider/message_reply_provider.dart';
 
@@ -27,6 +28,7 @@ class ChatRepositoryController {
     required String recieverId,
     required String text,
     required MessageEnum messageEnum,
+    required bool isGroupChat,
   }) {
     final replyMessage = ref.read(messageRepyProvider);
     ref.read(authControllerProvider).getCurrentUserData().then((value) {
@@ -39,6 +41,7 @@ class ChatRepositoryController {
         replyMessage: replyMessage?.replyMessage,
         isMe: replyMessage?.isMe,
         messageReplyType: replyMessage?.replyType,
+        isGroupChat: isGroupChat,
       );
     });
     ref.read(messageRepyProvider.state).update((state) => null);
@@ -49,6 +52,7 @@ class ChatRepositoryController {
     required String recieverId,
     required File file,
     required MessageEnum messageEnum,
+    required bool isGroupChat,
   }) {
     final replyMessage = ref.read(messageRepyProvider);
     ref.read(authControllerProvider).getCurrentUserData().then((value) {
@@ -61,6 +65,7 @@ class ChatRepositoryController {
         replyMessage: replyMessage?.replyMessage,
         isMe: replyMessage?.isMe,
         messageReplyType: replyMessage?.replyType,
+        isGroupChat: isGroupChat,
       );
     });
     ref.read(messageRepyProvider.state).update((state) => null);
@@ -74,11 +79,19 @@ class ChatRepositoryController {
     return chatRepository.getMessages(userId);
   }
 
+  Stream<List<Message>> getGroupMessages(String groupId) {
+    return chatRepository.getGroupMessages(groupId: groupId);
+  }
+
   void setMessageSeen(
     BuildContext context,
     String receiverId,
     String messageId,
   ) {
     chatRepository.setMessageSeen(context, receiverId, messageId);
+  }
+
+  Stream<List<GroupModel>> getGroupContacts() {
+    return chatRepository.getGroupContacts();
   }
 }

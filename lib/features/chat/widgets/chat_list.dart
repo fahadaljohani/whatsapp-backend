@@ -12,10 +12,12 @@ import 'package:whatsapp/provider/message_reply_provider.dart';
 
 class ChatList extends ConsumerStatefulWidget {
   final String recieverId;
+  final bool isGroupChat;
 
   const ChatList({
     Key? key,
     required this.recieverId,
+    required this.isGroupChat,
   }) : super(
           key: key,
         );
@@ -36,7 +38,11 @@ class _ChatListState extends ConsumerState<ChatList> {
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<List<Message>>(
-        stream: ref.read(chatControllerProvider).getMessages(widget.recieverId),
+        stream: widget.isGroupChat
+            ? ref
+                .read(chatControllerProvider)
+                .getGroupMessages(widget.recieverId)
+            : ref.read(chatControllerProvider).getMessages(widget.recieverId),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Loader();
@@ -73,9 +79,10 @@ class _ChatListState extends ConsumerState<ChatList> {
                   onLeftSwip: () {
                     ref.read(messageRepyProvider.state).update((state) {
                       return MessageReply(
-                          replyMessage: message.text,
-                          isMe: true,
-                          replyType: message.type);
+                        replyMessage: message.text,
+                        isMe: true,
+                        replyType: message.type,
+                      );
                     });
                   },
                 );
@@ -91,9 +98,10 @@ class _ChatListState extends ConsumerState<ChatList> {
                 onRightSwipe: () {
                   ref.read(messageRepyProvider.state).update((state) {
                     return MessageReply(
-                        replyMessage: message.text,
-                        isMe: false,
-                        replyType: message.type);
+                      replyMessage: message.text,
+                      isMe: false,
+                      replyType: message.type,
+                    );
                   });
                 },
               );
