@@ -25,13 +25,14 @@ class CallAdapter extends TypeAdapter<Call> {
       receiverName: fields[5] as String,
       receiverPic: fields[6] as String,
       hasDial: fields[7] as bool,
+      createdAt: fields[8] as DateTime,
     );
   }
 
   @override
   void write(BinaryWriter writer, Call obj) {
     writer
-      ..writeByte(8)
+      ..writeByte(9)
       ..writeByte(0)
       ..write(obj.callId)
       ..writeByte(1)
@@ -47,7 +48,9 @@ class CallAdapter extends TypeAdapter<Call> {
       ..writeByte(6)
       ..write(obj.receiverPic)
       ..writeByte(7)
-      ..write(obj.hasDial);
+      ..write(obj.hasDial)
+      ..writeByte(8)
+      ..write(obj.createdAt);
   }
 
   @override

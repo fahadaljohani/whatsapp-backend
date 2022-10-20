@@ -39,6 +39,7 @@ class CallController {
         receiverName: receiverName,
         receiverPic: receiverPic,
         hasDial: true,
+        createdAt: DateTime.now(),
       );
       Call receiverCall = Call(
         callId: callId,
@@ -49,6 +50,7 @@ class CallController {
         receiverName: receiverName,
         receiverPic: receiverPic,
         hasDial: false,
+        createdAt: DateTime.now(),
       );
       callRepository.makeCall(
           context: context, sender: senderCall, receiver: receiverCall);

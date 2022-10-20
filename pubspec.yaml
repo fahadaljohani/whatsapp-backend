@@ -57,6 +57,7 @@ dependencies:
   agora_uikit: ^1.0.4
   hive: 
   hive_flutter: 
+  flutter_slidable: ^2.0.0
   
 dev_dependencies:
   flutter_test:

@@ -24,6 +24,9 @@ class CallPickupScreen extends ConsumerWidget {
             Call call =
                 Call.fromMap(snapshot.data!.data() as Map<String, dynamic>);
             if (!call.hasDial) {
+              // save incoming call data in the Hive phone memory.
+              Box boxCall = Hive.box<Call>('call');
+              boxCall.add(call);
               return Scaffold(
                 body: Column(
                     mainAxisAlignment: MainAxisAlignment.center,

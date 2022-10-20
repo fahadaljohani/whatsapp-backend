@@ -24,7 +24,7 @@ void main() async {
   await Hive.initFlutter(
       directory.path); // path: /data/user/0/com.example.whatsapp/app_flutter
   Hive.registerAdapter(CallAdapter());
-  var boxCall = Hive.openBox<Call>('call');
+  Box boxCall = await Hive.openBox<Call>('call');
 
   runApp(
     const ProviderScope(

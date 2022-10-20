@@ -20,7 +20,8 @@ class Call extends HiveObject {
   final String receiverPic;
   @HiveField(7)
   final bool hasDial;
-
+  @HiveField(8)
+  final DateTime createdAt;
   Call({
     required this.callId,
     required this.callerId,
@@ -30,6 +31,7 @@ class Call extends HiveObject {
     required this.receiverName,
     required this.receiverPic,
     required this.hasDial,
+    required this.createdAt,
   });
 
   Map<String, dynamic> toMap() {
@@ -42,6 +44,7 @@ class Call extends HiveObject {
       'receiverName': receiverName,
       'receiverPic': receiverPic,
       'hasDial': hasDial,
+      'createdAt': createdAt.millisecondsSinceEpoch,
     };
   }
 
@@ -55,6 +58,7 @@ class Call extends HiveObject {
       receiverName: map['receiverName'] as String,
       receiverPic: map['receiverPic'] as String,
       hasDial: map['hasDial'] as bool,
+      createdAt: DateTime.fromMillisecondsSinceEpoch(map['createdAt'] as int),
     );
   }
 }
