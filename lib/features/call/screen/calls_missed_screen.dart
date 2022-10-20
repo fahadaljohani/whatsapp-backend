@@ -3,6 +3,7 @@ import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:intl/intl.dart';
 import 'package:whatsapp/colors.dart';
+import 'package:whatsapp/common/utils/utils.dart';
 import 'package:whatsapp/models/call.dart';
 
 class CallsMissedScreen extends StatelessWidget {
@@ -31,15 +32,29 @@ class CallsMissedScreen extends StatelessWidget {
                     child: Column(
                       children: [
                         Slidable(
-                          key: Key(call.receiverName),
+                          key: Key(call.callId),
                           endActionPane: ActionPane(
                             motion: const StretchMotion(),
                             dismissible: DismissiblePane(
-                              onDismissed: () => boxCall.delete(index),
+                              onDismissed: () {
+                                showSnackBar(
+                                  context: context,
+                                  content:
+                                      "call from ${call.receiverName} deleted",
+                                );
+                                call.delete();
+                              },
                             ),
                             children: [
                               SlidableAction(
-                                onPressed: (context) => boxCall.delete(index),
+                                onPressed: (context) {
+                                  showSnackBar(
+                                    context: context,
+                                    content:
+                                        "$call from ${call.receiverName} deleted",
+                                  );
+                                  call.delete();
+                                },
                                 backgroundColor: Colors.redAccent,
                                 icon: Icons.delete,
                                 label: 'Delete',
@@ -51,12 +66,12 @@ class CallsMissedScreen extends StatelessWidget {
                               onTap: () {
                                 final slidbale = Slidable.of(context);
                                 final isClosed =
-                                    slidbale!.actionPaneType.value ==
+                                    slidbale?.actionPaneType.value ==
                                         ActionPaneType.none;
                                 if (isClosed) {
-                                  slidbale.openEndActionPane();
+                                  slidbale?.openEndActionPane();
                                 } else {
-                                  slidbale.close();
+                                  slidbale?.close();
                                 }
                               },
                               leading: CircleAvatar(
